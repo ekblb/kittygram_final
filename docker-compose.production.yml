@@ -14,9 +14,11 @@ services:
   backend:
     image: ekblb/kittygram_backend
     env_file: .env
+    depends_on: 
+      - db 
     volumes:
       - static_volume:/backend_static
-      - media:/app/media
+      - media_volume:/app/media
   frontend:
     image: ekblb/kittygram_frontend  
     env_file: .env
@@ -26,9 +28,11 @@ services:
   gateway:
     image: ekblb/kittygram_gateway  
     env_file: .env
+    depends_on: 
+      - backend
     volumes:
       - static_volume:/staticfiles/
-      - media:/app/media/
+      - media_volume:/app/media/
     ports:
       - 9000:80
 
